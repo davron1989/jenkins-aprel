@@ -2,12 +2,18 @@ node {
     stage("Pull Repo") {
         git branch: 'solution', url: 'https://github.com/ikambarov/terraform-task.git'
     }
-
-    stage("Init") {
-        sh 'echo "Terraform Init"'
-    }
-
-    stage("Terraform Apply") {
-        sh 'echo "Terraform Apply"'
+    withCredentials([usernamePassword(credentialsId: 'jenkins-aws-access-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+        stage("Terraform Init") {
+            sh '''
+                cd sandbox/
+                terraform-0.13 init
+            '''
+        }
+        stage("Terraform Apply") {
+            sh '''
+                cd sendbox/
+                teraform-0.13 apply  -auto-approve
+            '''
+        }
     }
 }

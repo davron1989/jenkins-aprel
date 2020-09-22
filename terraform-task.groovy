@@ -11,7 +11,7 @@ node {
         }
         stage("Terraform Apply") {
             sh '''
-                cd sendbox/
+                cd sandbox/
                 teraform-0.13 apply  -auto-approve
             '''
         }

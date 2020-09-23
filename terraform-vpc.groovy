@@ -7,7 +7,7 @@ properties([
 
 node {
     stage("Pull Repo") {
-        git branch: 'solution', url: 'https://github.com/davron1989/terraform-vpc.git'
+        git url: 'https://github.com/davron1989/terraform-vpc.git'
     }
     withCredentials([usernamePassword(credentialsId: 'jenkins-aws-access-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
         stage("Terraform Init") {
